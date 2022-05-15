@@ -12,24 +12,17 @@
 </template>
 
 <script>
+import toggleMixin from '@/mixins/toggleMixin';
+
 export default {
   name: 'my-popup',
-  props: {
-    show: {
-      type: Boolean,
-      default: true,
-    },
-  },
-  methods: {
-    closePopup() {
-      this.$emit('update:show', false);
-    },
-  },
+  mixins: [toggleMixin],
 };
 </script>
 
 <style scoped>
 .popup {
+  padding: 20px;
   top: 0;
   left: 0;
   bottom: 0;
