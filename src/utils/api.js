@@ -1,32 +1,29 @@
-/* eslint-disable no-underscore-dangle */
-/* eslint-disable prefer-promise-reject-errors */
-/* eslint-disable class-methods-use-this */
 class Api {
   constructor({ baseUrl, headers }) {
-    this._baseUrl = baseUrl;
-    this._headers = headers;
+    this.baseUrl = baseUrl;
+    this.headers = headers;
   }
 
-  _checkServerResponse(res) {
+  static checkServerResponse(res) {
     if (res.ok) {
       return res.json();
     }
-    return Promise.reject('Что-то пошло не так. Обратитесь к разработчику');
+    throw new Error('Что-то пошло не так. Обратитесь к разработчику');
   }
 
   createUser(user) {
-    return fetch(`${this._baseUrl}`, {
+    return fetch(`${this.baseUrl}`, {
       method: 'POST',
-      headers: this._headers,
+      headers: this.headers,
       body: JSON.stringify(user),
-    }).then((res) => this._checkServerResponse(res));
+    }).then((res) => Api.checkServerResponse(res));
   }
 
   deleteUser(userId) {
-    return fetch(`${this._baseUrl}/${userId}`, {
+    return fetch(`${this.baseUrl}/${userId}`, {
       method: 'DELETE',
-      headers: this._headers,
-    }).then((res) => this._checkServerResponse(res));
+      headers: this.headers,
+    }).then((res) => Api.checkServerResponse(res));
   }
 }
 
