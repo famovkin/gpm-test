@@ -11,7 +11,7 @@
     />
     <users-list
       v-if='!isUsersLoading'
-      :users="users"
+      :users="filteredUsers"
     />
     <my-preloader v-else/>
   </div>
@@ -78,12 +78,24 @@ export default {
       threshold: 1.0,
     };
     const callback = (entries) => {
-      if (entries[0].isIntersecting && this.users.length !== 0 && !this.isUsersEnd) {
+      // проверка только на появление наблюдаемого блока на экране
+      // проверка на первый рендер
+      // проверка на флага для окончания пользователей
+      // подружаем новый пользователей только на вкладке Employee List
+      if (entries[0].isIntersecting && this.users.length !== 0 && !this.isUsersEnd && this.selectedFilter === 'All') {
         this.loadMoreUsers();
       }
     };
     const observer = new IntersectionObserver(callback, options);
     observer?.observe(this.$refs.observer);
+  },
+  computed: {
+    filteredUsers() {
+      if (this.selectedFilter === 'All') {
+        return this.users;
+      }
+      return [...this.users].filter((user) => user.designation === this.selectedFilter);
+    },
   },
 };
 </script>
