@@ -21,6 +21,13 @@ class Api {
       body: JSON.stringify(user),
     }).then((res) => this._checkServerResponse(res));
   }
+
+  deleteUser(userId) {
+    return fetch(`${this._baseUrl}/${userId}`, {
+      method: 'DELETE',
+      headers: this._headers,
+    }).then((res) => this._checkServerResponse(res));
+  }
 }
 
 const api = new Api({

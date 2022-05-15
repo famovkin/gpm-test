@@ -12,7 +12,7 @@
       <p class="user-card__designation">{{ user.designation }}</p>
       <p class="user-card__phone">{{ formatPhone(user.phone) }}</p>
       <p class="user-card__date">{{ formatDate(user.joiningDate) }}</p>
-      <my-more-button/>
+      <my-button @click='$emit("remove", user)'>Remove</my-button>
     </li>
 </template>
 
@@ -62,7 +62,7 @@ export default {
   align-items: center;
   gap: 20px;
   margin-bottom: 10px;
-  min-width: 768px;
+  min-width: 1024px;
   background-color: #fff;
   padding: 18px;
   border-radius: 10px;
@@ -105,7 +105,7 @@ export default {
 
 .user-card:first-child > .user-card__basic-info:after {
   content: 'Basic Info';
-  top: -50px;
+  top: -60px;
   left: 0;
   transform: translate(0);
 }
@@ -118,19 +118,18 @@ export default {
   flex: 1;
   position: relative;
   text-align: center;
-  white-space: nowrap;
-  min-width: 90px;
-  width: 90px;
   font-weight: 700;
 }
 
 :after {
   position: absolute;
-  top: -60px;
+  top: -70px;
   left: 50%;
   transform: translate(-50%);
   color: #b5bbc9;
   font-weight: 700;
+  font-size: 15px;
+  min-width: 125px;
 }
 
 .user-card:first-child > .user-card__code:after {

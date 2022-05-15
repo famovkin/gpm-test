@@ -5,6 +5,7 @@
         v-for='user in users'
         :key='user.id'
         :user='user'
+        @remove='$emit("remove", user)'
       />
     </transition-group>
   </ul>

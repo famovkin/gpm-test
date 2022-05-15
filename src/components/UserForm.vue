@@ -10,6 +10,7 @@
       <my-input
         inputName="Email"
         inputType="email"
+        max="32"
         placeholder="example@gmail.com"
         v-model="user.email"
       />
@@ -30,6 +31,7 @@
       <my-input
         inputName="Designation"
         inputType="text"
+        max="32"
         placeholder="E.g. Developer"
         v-model="user.designation"
       />

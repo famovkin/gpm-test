@@ -14,6 +14,7 @@
     <users-list
       v-if='!isUsersLoading'
       :users="filteredUsers"
+      @remove='removeUser'
     />
     <my-preloader v-else/>
   </div>
@@ -75,6 +76,11 @@ export default {
           this.isPopupOpen = false;
         });
     },
+    removeUser(deletedUser) {
+      api.deleteUser(deletedUser.id)
+        .then((data) => { this.users = this.users.filter((user) => user.id !== data.id); })
+        .catch((err) => console.log('Ошибка. Запрос не выполнен:', err));
+    },
     changeFilter(filter) {
       this.selectedFilter = filter;
     },
@@ -83,7 +89,7 @@ export default {
       fetch(`https://627e5e6e271f386ceff6c423.mockapi.io/users?page=${this.page}&limit=${this.limit}`)
         .then((res) => res.json())
         .then((data) => { this.users = data; })
-        .catch((err) => { console.log('Ошибка. Запрос не выполнен:', err); })
+        .catch((err) => console.log('Ошибка. Запрос не выполнен:', err))
         .finally(() => { this.isUsersLoading = false; });
     },
     async loadMoreUsers() {
@@ -98,7 +104,7 @@ export default {
             this.isUsersEnd = true;
           }
         })
-        .catch((err) => { console.log('Ошибка. Запрос не выполнен: ', err); });
+        .catch((err) => console.log('Ошибка. Запрос не выполнен: ', err));
     },
   },
   mounted() {
