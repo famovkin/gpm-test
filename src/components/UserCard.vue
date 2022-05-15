@@ -64,10 +64,11 @@ export default {
   margin-bottom: 10px;
   min-width: 768px;
   background-color: #fff;
-  padding: 15px;
+  padding: 18px;
   border-radius: 10px;
-  color: #2b3a5a;
+  color: #434f64;
   transition: box-shadow 0.2s ease-in-out;
+  font-size: 15px;
 }
 
 .user-card:hover {
@@ -75,9 +76,11 @@ export default {
 }
 
 .user-card__number {
-  flex: .4;
+  flex: .2;
   text-align: center;
-  min-width: 10px;
+  min-width: 20px;
+  color: #b5bbc9;
+  font-weight: 700;
 }
 
 .user-card__basic-info {
@@ -87,6 +90,13 @@ export default {
   align-items: center;
   gap: 10px;
   min-width: 240px;
+  font-size: 14px;
+}
+
+.user-card__wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
 }
 
 .user-card__name {
@@ -124,7 +134,7 @@ export default {
 }
 
 .user-card:first-child > .user-card__code:after {
-  content: 'Employee';
+  content: 'Employee Code';
 }
 .user-card:first-child > .user-card__designation:after {
   content: 'Designation';
@@ -139,6 +149,7 @@ export default {
 .user-card__avatar {
   height: 32px;
   min-width: 32px;
+  margin-right: 8px;
   border-radius: 50%;
 }
 </style>

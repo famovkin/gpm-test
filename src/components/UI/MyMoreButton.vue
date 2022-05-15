@@ -30,8 +30,8 @@ export default {
 .more-button__dot {
   top: 10px;
   left: 50%;
-  width: 4px;
-  height: 4px;
+  width: 5px;
+  height: 5px;
   background: #b5bbc9;
   border-radius: 50%;
 }

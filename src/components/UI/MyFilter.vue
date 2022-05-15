@@ -53,6 +53,6 @@ export default {
 
 .filter__item_active {
   border-bottom: 2px solid #00dc81;
-  color: #2b3a5a;
+  color: #434f64;
 }
 </style>

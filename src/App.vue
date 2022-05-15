@@ -98,7 +98,7 @@ export default {
 
 body {
   min-width: 425px;
-  background: #e9ebef;
+  background: #f6f8fc;
 }
 
 .app {
@@ -109,7 +109,7 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  color: #2b3a5a;
+  color: #434f64;
   margin-bottom: 10px;
 }
 
