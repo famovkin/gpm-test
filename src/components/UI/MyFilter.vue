@@ -32,11 +32,13 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .filter {
   list-style: none;
   display: flex;
   border-bottom: 2px solid #d7dce5;
+  margin-bottom: 45px;
+  overflow-x: auto;
 }
 
 .filter__item {
@@ -46,11 +48,11 @@ export default {
   cursor: pointer;
   font-size: 15px;
   font-weight: 700;
+  white-space: nowrap;
 }
 
 .filter__item_active {
-  border-bottom: 4px solid #00dc81;
-  margin-bottom: -2px;
+  border-bottom: 2px solid #00dc81;
   color: #2b3a5a;
 }
 </style>
