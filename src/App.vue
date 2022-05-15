@@ -63,8 +63,13 @@ export default {
     addUser(user) {
       this.isReqLoading = true;
       api.createUser(user)
-        .then((data) => { this.users.push(data); })
-        .catch((err) => { console.log('Ошибка. Запрос не выполнен:', err); })
+        .then((data) => {
+          // пушим нового пользователя только, если он есть на просмотренных страницах
+          if (this.users.length + 1 <= this.page * this.limit) {
+            this.users.push(data);
+          }
+        })
+        .catch((err) => console.log('Ошибка. Запрос не выполнен:', err))
         .finally(() => {
           this.isReqLoading = false;
           this.isPopupOpen = false;
