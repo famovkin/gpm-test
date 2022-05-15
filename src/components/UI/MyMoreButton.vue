@@ -24,6 +24,7 @@ export default {
   cursor: pointer;
   border: none;
   background: none;
+  min-width: 25px;
 }
 
 .more-button__dot {

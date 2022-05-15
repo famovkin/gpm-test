@@ -64,7 +64,7 @@ export default {
   margin-bottom: 10px;
   min-width: 768px;
   background-color: #fff;
-  padding: 20px;
+  padding: 15px;
   border-radius: 10px;
   color: #2b3a5a;
   transition: box-shadow 0.2s ease-in-out;
@@ -77,14 +77,20 @@ export default {
 .user-card__number {
   flex: .4;
   text-align: center;
+  min-width: 10px;
 }
 
 .user-card__basic-info {
   flex: 2;
   position: relative;
   display: flex;
+  align-items: center;
   gap: 10px;
-  white-space: nowrap;
+  min-width: 240px;
+}
+
+.user-card__name {
+  font-weight: 700;
 }
 
 .user-card:first-child > .user-card__basic-info:after {
@@ -103,6 +109,9 @@ export default {
   position: relative;
   text-align: center;
   white-space: nowrap;
+  min-width: 90px;
+  width: 90px;
+  font-weight: 700;
 }
 
 :after {
@@ -129,7 +138,7 @@ export default {
 
 .user-card__avatar {
   height: 32px;
-  width: 32px;
+  min-width: 32px;
   border-radius: 50%;
 }
 </style>

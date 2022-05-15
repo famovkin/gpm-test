@@ -10,9 +10,13 @@
       @change="changeFilter"
     />
     <users-list
+      v-if='!isUsersLoading'
       :users="users"
     />
+    <my-preloader v-else/>
   </div>
+  <!-- наблюдаемый блок для перехода на следующую страницу -->
+  <div class="observer" ref="observer"/>
 </template>
 
 <script>
@@ -31,69 +35,55 @@ export default {
         { id: 4, name: 'Architecture', value: 'Architect' },
       ],
       selectedFilter: 'All',
-      users: [
-        {
-          about: 'I would introduce myself in few words. Passionate coder, beginner runner, best colleague ever. That pretty much sums it up, though at least the last one my former colleagues have to confirm. I try to do a good job in all roles I have in life, and I enjoy the process immensely.',
-          avatar: 'https://images.unsplash.com/photo-1552323356-322f06b49db4?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MjZ8fHBlb3BsZXxlbnwwfDJ8MHx8&auto=format&fit=crop&w=800&q=60',
-          designation: 'Planner',
-          email: 'inezwilkinsongmail.com',
-          employeeCode: '71484-2390',
-          id: '1',
-          joiningDate: '2021-06-21T18:32:58.719Z',
-          name: 'Inez Wilkinson',
-          phone: '1-886-942-9803',
-        },
-        {
-          about: 'I would introduce myself in few words. Passionate coder, beginner runner, best colleague ever. That pretty much sums it up, though at least the last one my former colleagues have to confirm. I try to do a good job in all roles I have in life, and I enjoy the process immensely.',
-          avatar: 'https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8cGVvcGxlfGVufDB8MnwwfHw%3D&auto=format&fit=crop&w=800&q=60',
-          designation: 'Analyst',
-          email: 'randysatterfieldgmail.com',
-          employeeCode: '16295',
-          id: '2',
-          joiningDate: '2021-06-21T18:14:48.689Z',
-          name: 'Randy Satterfield',
-          phone: '914.951.7503 x181',
-        },
-        {
-          about: 'I would introduce myself in few words. Passionate coder, beginner runner, best colleague ever. That pretty much sums it up, though at least the last one my former colleagues have to confirm. I try to do a good job in all roles I have in life, and I enjoy the process immensely.',
-          avatar: 'https://images.unsplash.com/photo-1485893086445-ed75865251e0?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTZ8fHBlb3BsZXxlbnwwfDJ8MHx8&auto=format&fit=crop&w=800&q=60',
-          designation: 'Coordinator',
-          email: 'misshazelpfeffergmail.com',
-          employeeCode: '86030-0942',
-          id: '3',
-          joiningDate: '2021-06-21T22:10:55.912Z',
-          name: 'Miss Hazel Pfeffer',
-          phone: '1-917-421-7610 x632',
-        },
-        {
-          about: 'I would introduce myself in few words. Passionate coder, beginner runner, best colleague ever. That pretty much sums it up, though at least the last one my former colleagues have to confirm. I try to do a good job in all roles I have in life, and I enjoy the process immensely.',
-          avatar: 'https://images.unsplash.com/photo-1485528562718-2ae1c8419ae2?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mjd8fHBlb3BsZXxlbnwwfDJ8MHx8&auto=format&fit=crop&w=800&q=60',
-          designation: 'Developer',
-          email: 'joshuashieldsgmail.com',
-          employeeCode: '46285-8173',
-          id: '4',
-          joiningDate: '2021-06-22T04:51:40.467Z',
-          name: 'Joshua Shields',
-          phone: '1-915-734-7079',
-        },
-        {
-          about: 'I would introduce myself in few words. Passionate coder, beginner runner, best colleague ever. That pretty much sums it up, though at least the last one my former colleagues have to confirm. I try to do a good job in all roles I have in life, and I enjoy the process immensely.',
-          avatar: 'https://images.unsplash.com/photo-1519699047748-de8e457a634e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MjV8fHBlb3BsZXxlbnwwfDJ8MHx8&auto=format&fit=crop&w=800&q=60',
-          designation: 'Coordinator',
-          email: 'dr.jennyhyattgmail.com',
-          employeeCode: '42117',
-          id: '5',
-          joiningDate: '2021-06-21T07:57:35.849Z',
-          name: 'Dr. Jenny Hyatt',
-          phone: '(970) 439-3913 x4219',
-        },
-      ],
+      isUsersLoading: false,
+      users: [],
+      page: 1,
+      limit: 10,
+      totalPages: 0,
+      // флаг для прекращения подгрузки новых пользователей
+      isUsersEnd: false,
     };
   },
   methods: {
     changeFilter(filter) {
       this.selectedFilter = filter;
     },
+    async fetchUsers() {
+      this.isUsersLoading = true;
+      fetch(`https://627e5e6e271f386ceff6c423.mockapi.io/users?page=${this.page}&limit=${this.limit}`)
+        .then((res) => res.json())
+        .then((data) => { this.users = data; })
+        .catch((err) => { console.log('Ошибка. Запрос не выполнен:', err); })
+        .finally(() => { this.isUsersLoading = false; });
+    },
+    async loadMoreUsers() {
+      this.page += 1;
+      const currentUsersCount = this.users.length;
+      fetch(`https://627e5e6e271f386ceff6c423.mockapi.io/users?page=${this.page}&limit=${this.limit}`)
+        .then((res) => res.json())
+        .then((data) => {
+          this.users = [...this.users, ...data];
+          // проверка на окончание новых пользователей для подгрузки
+          if (currentUsersCount === this.users.length) {
+            this.isUsersEnd = true;
+          }
+        })
+        .catch((err) => { console.log('Ошибка. Запрос не выполнен: ', err); });
+    },
+  },
+  mounted() {
+    this.fetchUsers();
+    const options = {
+      rootMargin: '0px',
+      threshold: 1.0,
+    };
+    const callback = (entries) => {
+      if (entries[0].isIntersecting && this.users.length !== 0 && !this.isUsersEnd) {
+        this.loadMoreUsers();
+      }
+    };
+    const observer = new IntersectionObserver(callback, options);
+    observer?.observe(this.$refs.observer);
   },
 };
 </script>
@@ -121,5 +111,9 @@ body {
   align-items: center;
   color: #2b3a5a;
   margin-bottom: 10px;
+}
+
+.observer {
+  height: 1px;
 }
 </style>
