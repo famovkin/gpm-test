@@ -35,7 +35,6 @@ export default {
   padding: 40px 8px 0;
   list-style: none;
   overflow-x: auto;
-  overflow-y: visible;
 }
 
 .users-list__title {
@@ -43,12 +42,16 @@ export default {
 }
 .users {
   display: inline-block;
-  margin-right: 10px;
+  margin-right: 5px;
 }
 
 .users-enter-active,
 .users-leave-active {
-  transition: all 0.2s ease;
+  transition: all .4s ease;
+}
+
+.users-leave-active {
+  position: absolute;
 }
 
 .users-enter-from,
@@ -58,6 +61,6 @@ export default {
 }
 
 .users-move {
-  transition: transform 0.2s ease;
+  transition: transform .4s;
 }
 </style>
