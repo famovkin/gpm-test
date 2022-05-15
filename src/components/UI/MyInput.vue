@@ -50,7 +50,7 @@ export default {
   width: 100%;
   margin-bottom: 10px;
   height: 30px;
-  font-size: 16px;
+  font-size: 15px;
   outline: none;
 }
 

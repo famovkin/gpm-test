@@ -8,7 +8,7 @@
       v-for="option in options"
       :key="option.id"
       :class="{'filter__item_active': selectedFilter === option.value}"
-      >
+    >
       {{ option.name }}
     </li>
   </ul>

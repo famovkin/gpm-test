@@ -2,7 +2,13 @@
   <li class="user-card">
       <p class="user-card__number">{{ user.id }}</p>
       <div class="user-card__basic-info">
-        <img class="user-card__avatar" :src="user.avatar" alt="Avatar">
+        <img
+          class="user-card__avatar"
+          tabindex="0"
+          @click="$router.push(`/${user.id}`)"
+          @keydown.enter="$router.push(`/${user.id}`)"
+          :src="user.avatar"
+          :alt="user.name">
         <div class="user-card__wrapper">
           <p class="user-card__name">{{ user.name }}</p>
           <p class="user-card__email">{{ user.email }}</p>
@@ -58,7 +64,6 @@ export default {
 <style scoped>
 .user-card {
   display: flex;
-  justify-content: space-between;
   align-items: center;
   gap: 20px;
   margin-bottom: 10px;
@@ -78,7 +83,6 @@ export default {
 .user-card__number {
   flex: .2;
   text-align: center;
-  min-width: 20px;
   color: #b5bbc9;
   font-weight: 700;
 }
@@ -146,10 +150,16 @@ export default {
 }
 
 .user-card__avatar {
-  height: 32px;
-  min-width: 32px;
+  height: 40px;
+  width: 40px;
   object-fit: cover;
   margin-right: 8px;
   border-radius: 50%;
+  transition: all .2s ease;
+  cursor: pointer;
+}
+
+.user-card__avatar:hover {
+  transform: scale(1.3);
 }
 </style>

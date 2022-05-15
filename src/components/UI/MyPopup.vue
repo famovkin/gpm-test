@@ -43,7 +43,7 @@ export default {
   margin: auto;
   background: #fff;
   border-radius: 12px;
-  width: 400px;
+  width: 500px;
   padding: 30px;
 }
 </style>

@@ -102,7 +102,6 @@ export default {
 .form {
   display: flex;
   flex-direction: column;
-  width: 100%;
   color: #434f64;
 }
 
