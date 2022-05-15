@@ -2,6 +2,7 @@
   <form class="form" @submit.prevent="addUser">
     <h2 class="form__title">Adding a new employee</h2>
       <my-input
+        v-focus
         inputName="Name"
         inputType="text"
         placeholder="First and last name"
