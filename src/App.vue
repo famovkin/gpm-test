@@ -2,7 +2,9 @@
   <div class="app">
     <div class="header">
       <h1>Dashboard</h1>
-      <my-button>+ Add employee</my-button>
+      <my-button @click='openPopup'>
+        + Add employee
+      </my-button>
     </div>
     <my-filter
       :options="filterOptions"
@@ -17,14 +19,22 @@
   </div>
   <!-- наблюдаемый блок для перехода на следующую страницу -->
   <div class="observer" ref="observer"/>
+  <my-popup v-model:show="isPopupOpen">
+    <user-form
+      @add='addUser'
+      :isLoading="isReqLoading"
+    />
+  </my-popup>
 </template>
 
 <script>
 import UsersList from '@/components/UsersList.vue';
+import UserForm from '@/components/UserForm.vue';
+import api from '@/utils/api';
 
 export default {
   components: {
-    UsersList,
+    UsersList, UserForm,
   },
   data() {
     return {
@@ -36,6 +46,8 @@ export default {
       ],
       selectedFilter: 'All',
       isUsersLoading: false,
+      isPopupOpen: false,
+      isReqLoading: false,
       users: [],
       page: 1,
       limit: 10,
@@ -45,6 +57,19 @@ export default {
     };
   },
   methods: {
+    openPopup() {
+      this.isPopupOpen = true;
+    },
+    addUser(user) {
+      this.isReqLoading = true;
+      api.createUser(user)
+        .then((data) => { this.users.push(data); })
+        .catch((err) => { console.log('Ошибка. Запрос не выполнен:', err); })
+        .finally(() => {
+          this.isReqLoading = false;
+          this.isPopupOpen = false;
+        });
+    },
     changeFilter(filter) {
       this.selectedFilter = filter;
     },
@@ -82,7 +107,10 @@ export default {
       // проверка на первый рендер
       // проверка на флага для окончания пользователей
       // подружаем новый пользователей только на вкладке Employee List
-      if (entries[0].isIntersecting && this.users.length !== 0 && !this.isUsersEnd && this.selectedFilter === 'All') {
+      if (entries[0].isIntersecting
+        && this.users.length !== 0
+        && !this.isUsersEnd
+        && this.selectedFilter === 'All') {
         this.loadMoreUsers();
       }
     };
@@ -127,5 +155,25 @@ body {
 
 .observer {
   height: 1px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  width: 500px;
+}
+
+.input {
+ font-weight: 700;
+}
+
+.input__field {
+  border: none;
+  border-bottom: 1px solid #434f64;
+  width: 100%;
+  margin-bottom: 10px;
+  height: 30px;
+  font-size: 16px;
+  outline: none;
 }
 </style>

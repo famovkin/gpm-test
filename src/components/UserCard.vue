@@ -149,6 +149,7 @@ export default {
 .user-card__avatar {
   height: 32px;
   min-width: 32px;
+  object-fit: cover;
   margin-right: 8px;
   border-radius: 50%;
 }
