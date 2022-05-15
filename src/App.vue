@@ -19,7 +19,15 @@
     <my-preloader v-else/>
   </div>
   <!-- наблюдаемый блок для перехода на следующую страницу -->
-  <div class="observer" ref="observer"/>
+  <div
+    v-if='!isUsersLoading && !isUsersEnd'
+    class="observer"
+    ref="observer"
+    v-intersection="{
+      cb: loadMoreUsers,
+      usersCount: this.users.length,
+      selectedFilter: this.selectedFilter,
+    }"/>
   <my-popup v-model:show="isPopupOpen">
     <user-form
       @add='addUser'
@@ -109,24 +117,6 @@ export default {
   },
   mounted() {
     this.fetchUsers();
-    const options = {
-      rootMargin: '0px',
-      threshold: 1.0,
-    };
-    const callback = (entries) => {
-      // проверка только на появление наблюдаемого блока на экране
-      // проверка на первый рендер
-      // проверка на флага для окончания пользователей
-      // подружаем новый пользователей только на вкладке Employee List
-      if (entries[0].isIntersecting
-        && this.users.length !== 0
-        && !this.isUsersEnd
-        && this.selectedFilter === 'All') {
-        this.loadMoreUsers();
-      }
-    };
-    const observer = new IntersectionObserver(callback, options);
-    observer?.observe(this.$refs.observer);
   },
   computed: {
     filteredUsers() {
