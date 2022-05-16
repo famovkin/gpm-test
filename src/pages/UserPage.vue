@@ -1,7 +1,7 @@
 <template>
   <div class="profile" v-if="!isUserLoading">
     <div class="profile__content">
-      <div class="profile__background"></div>
+      <div class="profile__background"/>
       <img
         class="profile__avatar"
         :src="user.avatar"
@@ -15,18 +15,18 @@
         <p class="profile__info"><strong>Email: </strong>{{ user.email }}</p>
         <p class="profile__info"><strong>About: </strong>{{ user.about }}</p>
         <div class="profile__buttons">
-        <my-button
-          class="profile__button"
-          @click="$router.push('/')"
-        >
-          Back
-        </my-button>
-        <my-button
-          class="profile__button"
-          @click="removeUser"
-        >
-          Delete
-        </my-button>
+          <my-button
+            class="profile__button"
+            @click="$router.push('/')"
+          >
+            Back
+          </my-button>
+          <my-button
+            class="profile__button"
+            @click="removeUser"
+          >
+            Delete
+          </my-button>
         </div>
       </div>
     </div>

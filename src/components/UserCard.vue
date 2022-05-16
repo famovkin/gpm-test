@@ -1,25 +1,26 @@
 <template>
   <li class="user-card">
-      <p class="user-card__number">{{ user.id }}</p>
-      <div class="user-card__basic-info">
-        <img
-          class="user-card__avatar"
-          tabindex="0"
-          @click="$router.push(`/${user.id}`)"
-          @keydown.enter="$router.push(`/${user.id}`)"
-          :src="user.avatar"
-          :alt="user.name">
-        <div class="user-card__wrapper">
-          <p class="user-card__name">{{ user.name }}</p>
-          <p class="user-card__email">{{ user.email }}</p>
-        </div>
+    <p class="user-card__number">{{ user.id }}</p>
+    <div class="user-card__basic-info">
+      <img
+        class="user-card__avatar"
+        tabindex="0"
+        @click="$router.push(`/${user.id}`)"
+        @keydown.enter="$router.push(`/${user.id}`)"
+        :src="user.avatar"
+        :alt="user.name"
+      />
+      <div class="user-card__wrapper">
+        <p class="user-card__name">{{ user.name }}</p>
+        <p class="user-card__email">{{ user.email }}</p>
       </div>
-      <p class="user-card__code">{{ user.employeeCode }}</p>
-      <p class="user-card__designation">{{ user.designation }}</p>
-      <p class="user-card__phone">{{ formatPhone(user.phone) }}</p>
-      <p class="user-card__date">{{ formatDate(user.joiningDate) }}</p>
-      <my-button @click='$emit("remove", user)'>Remove</my-button>
-    </li>
+    </div>
+    <p class="user-card__code">{{ user.employeeCode }}</p>
+    <p class="user-card__designation">{{ user.designation }}</p>
+    <p class="user-card__phone">{{ formatPhone(user.phone) }}</p>
+    <p class="user-card__date">{{ formatDate(user.joiningDate) }}</p>
+    <my-button @click='$emit("remove", user)'>Remove</my-button>
+  </li>
 </template>
 
 <script>

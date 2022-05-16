@@ -41,6 +41,7 @@ export default {
 .users-list__title {
   color: #2b3a5a;
 }
+
 .users {
   display: inline-block;
   margin-right: 5px;
