@@ -35,31 +35,22 @@
 </template>
 
 <script>
+import { useRouter } from 'vue-router';
+import useUser from '@/hooks/useUser';
 import api from '@/utils/api';
 
 export default {
-  data() {
-    return {
-      user: () => {},
-      isUserLoading: false,
-    };
+  setup() {
+    const router = useRouter();
+    const { user, isUserLoading } = useUser(router.currentRoute.value.params.id);
+    return { user, isUserLoading };
   },
   methods: {
-    fetchUser() {
-      this.isUserLoading = true;
-      api.getUser(this.$route.params.id)
-        .then((data) => { this.user = data; })
-        .catch((err) => console.log('Ошибка. Запрос не выполнен:', err))
-        .finally(() => { this.isUserLoading = false; });
-    },
     removeUser() {
       api.deleteUser(this.$route.params.id)
         .then(() => { this.$router.go(-1); })
         .catch((err) => console.log('Ошибка. Запрос не выполнен:', err));
     },
-  },
-  mounted() {
-    this.fetchUser();
   },
 };
 </script>
