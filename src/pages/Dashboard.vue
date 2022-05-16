@@ -1,5 +1,5 @@
 <template>
-  <div class="app">
+  <div class="dashboard">
     <div class="header">
       <h1>Dashboard</h1>
       <my-button @click='openPopup'>
@@ -17,23 +17,23 @@
       @remove='removeUser'
     />
     <my-preloader v-else/>
-  </div>
-  <!-- наблюдаемый блок для перехода на следующую страницу -->
-  <div
-    v-if='!isUsersLoading && !isUsersEnd'
-    class="observer"
-    ref="observer"
-    v-intersection="{
-      cb: loadMoreUsers,
-      usersCount: this.users.length,
-      selectedFilter: this.selectedFilter,
-    }"/>
-  <my-popup v-model:show="isPopupOpen">
-    <user-form
-      @add='addUser'
-      :isLoading="isReqLoading"
+    <!-- наблюдаемый блок для перехода на следующую страницу -->
+    <div
+      v-if='!isUsersLoading && !isUsersEnd'
+      class="observer"
+      v-intersection="{
+        cb: loadMoreUsers,
+        usersCount: this.users.length,
+        selectedFilter: this.selectedFilter,
+      }"
     />
-  </my-popup>
+    <my-popup v-model:show="isPopupOpen">
+      <user-form
+        @add='addUser'
+        :isLoading="isReqLoading"
+      />
+    </my-popup>
+  </div>
 </template>
 
 <script>
@@ -45,9 +45,7 @@ import api from '@/utils/api';
 
 export default {
   name: 'dash-board',
-  components: {
-    UsersList, UserForm,
-  },
+  components: { UsersList, UserForm },
   setup() {
     const {
       users,
@@ -125,7 +123,7 @@ export default {
 </script>
 
 <style>
-.app {
+.dashboard {
   padding: 70px 50px;
 }
 
