@@ -1,4 +1,5 @@
 import { ref, onMounted } from 'vue';
+import api from '@/utils/api';
 
 const useUsers = () => {
   const users = ref([]);
@@ -7,8 +8,7 @@ const useUsers = () => {
   const isUsersLoading = ref(false);
   const fetchUsers = () => {
     isUsersLoading.value = true;
-    fetch(`https://627e5e6e271f386ceff6c423.mockapi.io/users?page=${page.value}&limit=${limit.value}`)
-      .then((res) => res.json())
+    api.getUsers(page.value, limit.value)
       .then((data) => { users.value = data; })
       .catch((err) => console.log('Ошибка. Запрос не выполнен:', err))
       .finally(() => { isUsersLoading.value = false; });

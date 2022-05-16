@@ -11,6 +11,18 @@ class Api {
     throw new Error('Что-то пошло не так. Обратитесь к разработчику');
   }
 
+  getUsers(page, limit) {
+    return fetch(`${this.baseUrl}?page=${page}&limit=${limit}`, {
+      headers: this.headers,
+    }).then((res) => Api.checkServerResponse(res));
+  }
+
+  getUser(id) {
+    return fetch(`${this.baseUrl}/${id}`, {
+      headers: this.headers,
+    }).then((res) => Api.checkServerResponse(res));
+  }
+
   createUser(user) {
     return fetch(`${this.baseUrl}`, {
       method: 'POST',

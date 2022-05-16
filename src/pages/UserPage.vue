@@ -47,8 +47,7 @@ export default {
   methods: {
     fetchUser() {
       this.isUserLoading = true;
-      fetch(`https://627e5e6e271f386ceff6c423.mockapi.io/users/${this.$route.params.id}`)
-        .then((res) => res.json())
+      api.getUser(this.$route.params.id)
         .then((data) => { this.user = data; })
         .catch((err) => console.log('Ошибка. Запрос не выполнен:', err))
         .finally(() => { this.isUserLoading = false; });

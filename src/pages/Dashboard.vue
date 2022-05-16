@@ -110,8 +110,7 @@ export default {
     loadMoreUsers() {
       this.page += 1;
       const currentUsersCount = this.users.length;
-      fetch(`https://627e5e6e271f386ceff6c423.mockapi.io/users?page=${this.page}&limit=${this.limit}`)
-        .then((res) => res.json())
+      api.getUsers(this.page, this.limit)
         .then((data) => {
           this.users = [...this.users, ...data];
           // проверка на окончание новых пользователей для подгрузки
