@@ -6,7 +6,8 @@ const useSortedUsers = (users) => {
     if (selectedFilter.value === 'All') {
       return users.value;
     }
-    return [...users.value].filter((user) => user.designation === selectedFilter.value);
+    return [...users.value].filter((user) => user.designation.toLowerCase()
+      === selectedFilter.value.toLowerCase());
   });
 
   return {
