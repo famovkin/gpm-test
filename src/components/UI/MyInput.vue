@@ -23,9 +23,18 @@
 export default {
   name: 'my-input',
   props: {
-    modelValue: [String, Number],
-    inputName: String,
-    inputType: String,
+    modelValue: {
+      type: [String, Number],
+      required: true,
+    },
+    inputName: {
+      type: String,
+      required: true,
+    },
+    inputType: {
+      type: String,
+      required: true,
+    },
     pattern: String,
     placeholder: String,
     min: String,

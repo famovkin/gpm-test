@@ -22,7 +22,10 @@ export default {
       type: Array,
       default: () => [],
     },
-    selectedFilter: String,
+    selectedFilter: {
+      type: String,
+      default: 'All',
+    },
   },
   methods: {
     onClickFilter(option) {
