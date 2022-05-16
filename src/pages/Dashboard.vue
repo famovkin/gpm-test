@@ -39,12 +39,31 @@
 <script>
 import UsersList from '@/components/UsersList.vue';
 import UserForm from '@/components/UserForm.vue';
+import useUsers from '@/hooks/useUsers';
+import useSortedUsers from '@/hooks/useSortedUsers';
 import api from '@/utils/api';
 
 export default {
   name: 'dash-board',
   components: {
     UsersList, UserForm,
+  },
+  setup() {
+    const {
+      users,
+      page,
+      limit,
+      isUsersLoading,
+    } = useUsers();
+    const { selectedFilter, filteredUsers } = useSortedUsers(users);
+    return {
+      users,
+      page,
+      limit,
+      isUsersLoading,
+      selectedFilter,
+      filteredUsers,
+    };
   },
   data() {
     return {
@@ -54,13 +73,8 @@ export default {
         { id: 3, name: 'Development', value: 'Developer' },
         { id: 4, name: 'Architecture', value: 'Architect' },
       ],
-      selectedFilter: 'All',
-      isUsersLoading: false,
       isPopupOpen: false,
       isReqLoading: false,
-      users: [],
-      page: 1,
-      limit: 10,
       totalPages: 0,
       // флаг для прекращения подгрузки новых пользователей
       isUsersEnd: false,
@@ -93,14 +107,6 @@ export default {
     changeFilter(filter) {
       this.selectedFilter = filter;
     },
-    fetchUsers() {
-      this.isUsersLoading = true;
-      fetch(`https://627e5e6e271f386ceff6c423.mockapi.io/users?page=${this.page}&limit=${this.limit}`)
-        .then((res) => res.json())
-        .then((data) => { this.users = data; })
-        .catch((err) => console.log('Ошибка. Запрос не выполнен:', err))
-        .finally(() => { this.isUsersLoading = false; });
-    },
     loadMoreUsers() {
       this.page += 1;
       const currentUsersCount = this.users.length;
@@ -114,17 +120,6 @@ export default {
           }
         })
         .catch((err) => console.log('Ошибка. Запрос не выполнен: ', err));
-    },
-  },
-  mounted() {
-    this.fetchUsers();
-  },
-  computed: {
-    filteredUsers() {
-      if (this.selectedFilter === 'All') {
-        return this.users;
-      }
-      return [...this.users].filter((user) => user.designation === this.selectedFilter);
     },
   },
 };
