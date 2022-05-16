@@ -12,11 +12,11 @@
 </template>
 
 <script>
-import toggleMixin from '@/mixins/toggleMixin';
+import toggle from '@/mixins/toggle';
 
 export default {
   name: 'my-popup',
-  mixins: [toggleMixin],
+  mixins: [toggle],
 };
 </script>
 
