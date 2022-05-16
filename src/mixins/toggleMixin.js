@@ -6,7 +6,7 @@ export default {
     },
   },
   methods: {
-    hideDialog() {
+    closePopup() {
       this.$emit('update:show', false);
     },
   },
